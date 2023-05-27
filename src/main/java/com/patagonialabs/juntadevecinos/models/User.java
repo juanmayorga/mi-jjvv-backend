@@ -17,6 +17,9 @@ public class User {
     @Column(name = "email", length = 50, nullable = true)
     private String email;
 
+    public User(){
+
+    }
     public User(Long id, String firstName, String lastName, String dni, String email) {
         this.id = id;
         this.firstName = firstName;

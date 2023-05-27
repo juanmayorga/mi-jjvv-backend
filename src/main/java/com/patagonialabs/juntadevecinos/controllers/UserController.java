@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -30,5 +32,28 @@ public class UserController {
         User user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuario no existe"));
 
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userEdit){
+        User user = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("El usuario no existe"));
+
+        user.setFirstName(userEdit.getFirstName());
+        user.setLastName(userEdit.getLastName());
+        user.setDni(userEdit.getDni());
+        user.setEmail(userEdit.getEmail());
+
+        return ResponseEntity.ok(repository.save(user));
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity <Map<String,Boolean>> deleteUser(@PathVariable Long id){
+        User user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("El usuario no existe"));
+
+        repository.delete(user);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("deleted",Boolean.TRUE);
+        return ResponseEntity.ok(response);
     }
 }
