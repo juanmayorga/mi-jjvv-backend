@@ -21,16 +21,29 @@ public class User {
     @Column(name = "email", length = 50, nullable = true)
     private String email;
 
+    @Column(name = "password", length = 100, nullable = false)
+    private String password;
+
     public User(){
 
     }
-    public User(Long id, String username, String firstName, String lastName, String dni, String email) {
+    public User(Long id, String username, String firstName, String lastName, String dni, String email, String password) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dni = dni;
         this.email = email;
+        this.password = password;
+
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
